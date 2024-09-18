@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+          image: "941377120724.dkr.ecr.us-east-1.amazonaws.com/billeasy-backend:{{ .Values.image.imagetag | default .Chart.AppVersion }}"
+          imagePullPolicy: IfNotPresent
+          name: {{ .Release.Name }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+              name: backend
+              protocol: TCP
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets }}
+      restartPolicy: Always
+  replicas: 1
