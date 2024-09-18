@@ -12,9 +12,9 @@ spec:
         app: {{ .Release.Name }}
     spec:
       containers:
+        - name: {{ .Release.Name }}
           image: "941377120724.dkr.ecr.us-east-1.amazonaws.com/billeasy-backend:{{ .Values.image.imagetag | default .Chart.AppVersion }}"
           imagePullPolicy: IfNotPresent
-          name: {{ .Release.Name }}
           ports:
             - containerPort: {{ .Values.service.port }}
               name: backend
