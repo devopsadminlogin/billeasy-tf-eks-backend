@@ -1,7 +1,6 @@
-FROM python:3.9-slim
-
-WORKDIR /app
-
-COPY hello.py .
-
-CMD ["python", "hello.py"]
+FROM node:14
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+CMD ["node", "index.js"]
